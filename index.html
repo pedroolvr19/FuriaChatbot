@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Experiência FURIA</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif; /* Aplicando a nova fonte */
+            margin: 0;
+            background-color: #121212;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            transition: background-color 0.3s ease;
+            padding: 20px; /* Add some padding to body */
+        }
+        .container {
+            background-color: #1e1e1e;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+            text-align: center;
+            max-width: 700px; /* Increased max-width */
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .logo-furia {
+            max-width: 150px;
+            height: auto;
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease-out;
+        }
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        h1 {
+            font-family: 'Montserrat', sans-serif; /* Aplicando a nova fonte */
+            color: #ffcc00;
+            margin-bottom: 30px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+            animation: fadeInDown 0.5s ease-out;
+            font-size: 2em;
+            font-weight: 700; /* Usando peso Bold para o título principal */
+        }
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .hero-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+            animation: fadeInUp 0.5s ease-out 0.2s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .chat-container {
+            background-color: #2c2c2c;
+            border-radius: 8px;
+            padding: 25px;
+            margin-top: 30px;
+            max-width: 100%;
+            height: 350px;
+            overflow-y: auto;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.3);
+            display: flex;
+            flex-direction: column;
+            text-align: left;
+            word-break: break-word;
+            font-size: 1em; /* Ajustando tamanho da fonte para mensagens */
+        }
+        .message {
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: fadeInUp 0.3s ease-out forwards;
+            align-self: flex-start;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+        .user-message {
+            background-color: #444;
+            color: #fff;
+            align-self: flex-end;
+        }
+        .bot-message {
+            background-color: #ffcc00;
+            color: #181818;
+        }
+        .input-area {
+            display: flex;
+            margin-top: 20px;
+            width: 100%;
+        }
+        input[type="text"] {
+            font-family: 'Montserrat', sans-serif; /* Aplicando a nova fonte */
+            flex-grow: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px 0 0 8px;
+            background-color: #333;
+            color: #fff;
+            font-size: 16px;
+        }
+        button {
+            font-family: 'Montserrat', sans-serif; /* Aplicando a nova fonte */
+            background-color: #ffcc00;
+            color: #181818;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 0 8px 8px 0;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.2s ease;
+            font-weight: 600; /* Usando peso SemiBold para o botão */
+        }
+        button:hover {
+            background-color: #e6b800;
+        }
+        .glossary {
+            font-family: 'Montserrat', sans-serif; /* Aplicando a nova fonte */
+            background-color: #2c2c2c;
+            color: #e0e0e0;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+            text-align: left;
+            max-width: 100%;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 0.5s ease-out 0.4s forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+        .glossary h3 {
+            font-family: 'Montserrat', sans-serif; /* Aplicando a nova fonte */
+            color: #ffcc00;
+            margin-top: 0;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 600; /* Usando peso SemiBold para o título do glossário */
+        }
+        .glossary ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+        }
+        .glossary li {
+            background-color: #333;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            font-size: 0.9em;
+            border: 1px solid #444;
+        }
+         .glossary li:hover {
+            background-color: #444;
+            color: #ffcc00;
+        }
+         .glossary strong {
+             font-weight: normal;
+         }
+
+         .glossary .category-heading {
+             font-family: 'Montserrat', sans-serif; /* Aplicando a nova fonte */
+             display: block;
+             width: 100%;
+             margin: 15px 0 5px 0;
+             color: #ccc;
+             font-size: 1em;
+             font-weight: 600; /* Usando peso SemiBold para as categorias */
+             text-align: left;
+         }
+
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="img/furia_logo.png" alt="Logo FURIA" class="logo-furia">
+        <h1>Bem-vindo, Fiel Torcedor da FURIA!</h1>
+
+        <div class="chat-container" id="chat-log">
+            <div class="bot-message message">Olá! No que posso te ajudar hoje?</div>
+        </div>
+        <div class="input-area">
+            <input type="text" id="user-input" placeholder="Digite sua mensagem...">
+            <button onclick="sendMessage()">Enviar</button>
+        </div>
+        <div class="glossary">
+            <h3>Comandos Rápidos</h3>
+            <ul id="glossary-list">
+                <li class="category-heading">Informações Gerais</li>
+                <li><strong>Notícias</strong></li>
+                <li><strong>Próximo jogo</strong></li>
+                <li><strong>Resultados recentes</strong></li>
+
+                <li class="category-heading">Sobre o Time</li>
+                <li><strong>Jogadores</strong></li>
+                <li><strong>Quem é kscerato</strong></li>
+                 <li><strong>Quem é yuurih</strong></li>
+                 <li><strong>Quem é fallen</strong></li>
+                 <li><strong>Quem é malbsmd</strong></li>
+                 <li><strong>Quem é yekindar</strong></li>
+                 <li><strong>Quem é sidde</strong></li>
+                 <li><strong>Quem é chelo</strong></li>
+                 <li><strong>Quem é skullz</strong></li>
+
+
+                <li class="category-heading">Interação</li>
+                <li><strong>Apoiar</strong></li>
+                <li><strong>Força</strong></li>
+                <li><strong>Redes sociais</strong></li> </ul>
+        </div>
+    </div>
+
+    <script>
+        const chatLog = document.getElementById('chat-log');
+        const userInput = document.getElementById('user-input');
+        const glossaryList = document.getElementById('glossary-list');
+
+        // Updated PLAYERS_DATA based on the image
+        const PLAYERS_DATA = {
+            // Starters
+            "yuurih": { "name": "Yuri Santos", "role": "Rifler", "nationality": "Brazil", "status": "Titular", "time": "7 anos 5 meses", "maps": 1335, "rating": 1.17, "bio": "Pilar da equipe com desempenho consistente." },
+            "kscerato": { "name": "Kaike Cerato", "role": "Rifler", "nationality": "Brazil", "status": "Titular", "time": "7 anos 2 meses", "maps": 1310, "rating": 1.19, "bio": "Estrela da FURIA, conhecido pela mira afiada e leitura de jogo." },
+            "fallen": { "name": "Gabriel Toledo", "role": "AWPer", "nationality": "Brazil", "status": "Titular", "time": "1 ano 9 meses", "maps": 309, "rating": 1.01, "bio": "Lenda do CS:GO, agora lidera a FURIA como capitão." },
+            "malbsmd": { "name": "Marcelo Bandeira", "nickname_image": "moloday", "role": "Rifler", "nationality": "Brazil", "status": "Titular", "time": "13 dias", "maps": 0, "rating": 0.00, "bio": "Novo reforço para a line-up titular." },
+            "yekindar": { "name": "Mareks Gaļinskis", "role": "Entry Fragger", "nationality": "Latvia", "status": "Titular", "time": "2 dias", "maps": 0, "rating": 0.00, "bio": "Jogador agressivo conhecido por abrir bombsite." },
+            // Benched
+            "chelo": { "name": "Marcelo Cespedes", "role": "Entry Fragger", "nationality": "Brazil", "status": "Reserva", "time": "1 ano 9 meses", "maps": 309, "rating": 1.00, "bio": "Anteriormente starter, movido para o banco." },
+            "skullz": { "name": "Felipe Medeiros", "role": "Rifler", "nationality": "Brazil", "status": "Reserva", "time": "9 meses", "maps": 140, "rating": 0.99, "bio": "Jogador no elenco reserva." },
+            // Coach
+             "sidde": { "name": "Nicholas Sidde", "role": "Coach", "nationality": "Brazil", "status": "Treinador", "time": "9 meses", "maps_coached": 140, "winrate": "49%", "bio": "Comanda a equipe fora do servidor." }
+        };
+
+        // Added Recent Results Data
+        const RECENT_RESULTS = [
+            { date: "09/04/2025", opponent: "The MongolZ", score: "0 : 2" },
+            { date: "08/04/2025", opponent: "Virtus.pro", score: "0 : 2" },
+            { date: "07/04/2025", opponent: "Complexity", score: "1 : 2" },
+            { date: "06/04/2025", opponent: "Apogee", score: "2 : 0" }
+        ];
+        const TOURNAMENT_RECENT_RESULTS = "PGL Bucharest 2025 (12-14th place)"; // Tournament info
+
+
+        function appendMessage(message, isUser) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', isUser ? 'user-message' : 'bot-message');
+            messageDiv.innerHTML = message;
+            chatLog.appendChild(messageDiv);
+            chatLog.scrollTop = chatLog.scrollHeight;
+        }
+
+        function sendMessage() {
+            const message = userInput.value.trim();
+            if (message) {
+                appendMessage(message, true);
+                userInput.value = '';
+                processUserMessage(message);
+            }
+        }
+
+        function processUserMessage(message) {
+            const lowerMessage = message.toLowerCase();
+            let response = getRandomResponse("desconhecido");
+
+            if (lowerMessage.includes('notícias') || lowerMessage.includes('noticias')) {
+                response = getRandomResponse("noticias");
+            } else if (lowerMessage.includes('próximo jogo') || lowerMessage.includes('proximo jogo') || lowerMessage.includes('próximas partidas') || lowerMessage.includes('proximas partidas') || lowerMessage.includes('agenda')) {
+                response = getUpcomingMatches();
+            } else if (lowerMessage.includes('resultados recentes') || lowerMessage.includes('resultados') || lowerMessage.includes('ultimos jogos') || lowerMessage.includes('últimos jogos')) {
+                 response = getRecentResults(); // Call the updated function
+            } else if (lowerMessage.includes('jogadores') || lowerMessage.includes('time')) {
+                response = getPlayersInfo();
+            } else if (lowerMessage.startsWith('quem é') || lowerMessage.startsWith('sobre')) {
+                const parts = lowerMessage.split(/\s+/);
+                const playerName = parts.slice(2).join(' ').trim();
+
+                if (playerName) {
+                   response = getPlayerDetails(playerName);
+                } else {
+                    response = "Sobre quem você gostaria de saber? Tente 'quem é kscerato', por exemplo.";
+                }
+            } else if (lowerMessage.includes('apoiar') || lowerMessage.includes('força') || lowerMessage.includes('forca') || lowerMessage.includes('grito')) {
+                response = getFanChant();
+            } else if (lowerMessage.includes('redes sociais') || lowerMessage.includes('redes social') || lowerMessage.includes('social')) {
+                response = getSocialMediaLinks(); // Call the social media function
+             } else if (lowerMessage === 'olá' || lowerMessage === 'ola' || lowerMessage === 'oi' || lowerMessage === 'boa') {
+                response = getRandomResponse("saudacao");
+            } else if (lowerMessage.includes('obrigado') || lowerMessage.includes('valeu') || lowerMessage.includes('grato')) {
+                response = "De nada! Estou aqui para ajudar a nação FURIOSA!";
+            }
+
+
+            setTimeout(() => {
+                appendMessage(response, false);
+            }, 500);
+        }
+
+         function getPlayersInfo() {
+            let info = "<strong>Line-up da FURIA:</strong><br><br>";
+
+            const starters = Object.values(PLAYERS_DATA).filter(p => p.status === "Titular");
+            const benched = Object.values(PLAYERS_DATA).filter(p => p.status === "Reserva");
+            const coach = Object.values(PLAYERS_DATA).find(p => p.status === "Treinador");
+
+
+            if (starters.length > 0) {
+                info += "<strong>Titulares:</strong><br>";
+                starters.forEach(player => {
+                     const nickname = Object.keys(PLAYERS_DATA).find(key => PLAYERS_DATA[key] === player);
+                     info += `- ${player.name} (${nickname}) - ${player.role} ${player.maps > 0 || player.rating > 0 ? `(Rating: ${player.rating.toFixed(2)})` : ''}<br>`; // Show rating only if maps played > 0
+                });
+                 info += "<br>";
+            }
+
+             if (benched.length > 0) {
+                info += "<strong>Reservas:</strong><br>";
+                benched.forEach(player => {
+                     const nickname = Object.keys(PLAYERS_DATA).find(key => PLAYERS_DATA[key] === player);
+                     info += `- ${player.name} (${nickname}) - ${player.role} ${player.maps > 0 || player.rating > 0 ? `(Rating: ${player.rating.toFixed(2)})` : ''}<br>`; // Show rating only if maps played > 0
+                });
+                 info += "<br>";
+            }
+
+             if (coach) {
+                info += `<strong>Treinador:</strong><br>`;
+                 const nickname = Object.keys(PLAYERS_DATA).find(key => PLAYERS_DATA[key] === coach);
+                info += `- ${coach.name} (${nickname}) - ${coach.role} (Winrate: ${coach.winrate})<br>`;
+                 info += "<br>";
+            }
+
+
+            info += "Quer saber mais detalhes? Pergunte 'quem é [nome ou nickname]'.";
+            return info;
+        }
+
+
+        function getPlayerDetails(nameOrNickname) {
+            const searchTerm = nameOrNickname.toLowerCase();
+            for (const nickname in PLAYERS_DATA) {
+                const player = PLAYERS_DATA[nickname];
+                 // Check against nickname (key), name, or nickname from image data
+                if (nickname.toLowerCase() === searchTerm ||
+                    player.name.toLowerCase().includes(searchTerm) ||
+                    (player.nickname_image && player.nickname_image.toLowerCase() === searchTerm))
+                     {
+                         let details = `<strong>${player.name}</strong> (${nickname})<br>`;
+                         details += `Status: ${player.status}<br>`;
+                         details += `Função: ${player.role}<br>`;
+                         details += `Nacionalidade: ${player.nationality}<br>`;
+                         details += `Tempo na equipe: ${player.time}<br>`;
+
+                         if (player.status === "Treinador") {
+                              details += `Mapas coachados: ${player.maps_coached}<br>`;
+                              details += `Winrate: ${player.winrate}<br>`;
+                         } else { // Players
+                             // Avoid showing 0 rating/maps for very new players as per image logic
+                             if(player.maps > 0 || player.rating > 0) {
+                                 details += `Mapas jogados: ${player.maps}<br>`;
+                                 details += `Rating: ${player.rating.toFixed(2)}<br>`;
+                             }
+                         }
+
+                         details += `Bio: ${player.bio}`;
+                         return details;
+                }
+            }
+            return "Desculpe, não encontrei informações detalhadas sobre essa pessoa na equipe da FURIA.";
+        }
+
+        // Updated getRecentResults function
+        function getRecentResults() {
+            if (RECENT_RESULTS.length === 0) {
+                return "Ainda não há resultados recentes disponíveis.";
+            }
+
+            let resultsText = `<strong>Últimos resultados da FURIA (${TOURNAMENT_RECENT_RESULTS}):</strong><br><br>`;
+
+            RECENT_RESULTS.forEach(match => {
+                const [furiaScore, opponentScore] = match.score.split(' : ').map(Number);
+                let scoreDisplay = match.score;
+                let matchResult = "";
+
+                if (furiaScore > opponentScore) {
+                     scoreDisplay = `<strong style="color: #5cb85c;">${match.score}</strong>`; // Green for win
+                     matchResult = " (Vitória)";
+                } else {
+                     scoreDisplay = `<strong style="color: #d9534f;">${match.score}</strong>`; // Red for loss
+                     matchResult = " (Derrota)";
+                }
+
+                resultsText += `${match.date}: FURIA ${scoreDisplay}${matchResult} vs ${match.opponent}<br>`;
+            });
+
+            // Add note about missing data if necessary (e.g., if only part of a tournament is shown)
+            resultsText += "<br>Esses são os resultados mais recentes que tenho.";
+
+
+            return resultsText;
+        }
+
+
+        function getRandomResponse(type) {
+            const responses = {
+                "desconhecido": [
+                    "Desculpe, não entendi. Tente usar um dos comandos rápidos abaixo ou digite sua pergunta.",
+                    "Hmm, não peguei essa. Posso ajudar com informações do time. Veja os comandos rápidos.",
+                    "Poderia reformular? Estou aqui para falar da FURIA! Use os comandos rápidos como guia."
+                ],
+                "noticias": [
+                    "Ainda não implementamos a busca por notícias aqui. Para as últimas novidades, confira o site oficial da FURIA ou as redes sociais!",
+                    "Notícias em breve! Acesse o portal de notícias de esports para saber tudo sobre a FURIA."
+                ],
+                 "saudacao": [
+                    "Salve, torcedor! Pronto para mais FURIA?",
+                    "E aí! No que posso ajudar a nação FURIOSA hoje?",
+                    "Fala, fã! Alguma novidade do time?"
+                ]
+            };
+            const randomIndex = Math.floor(Math.random() * responses[type].length);
+            return responses[type][randomIndex];
+        }
+
+        function getUpcomingMatches() {
+            return "Ainda não implementamos a lista de próximos jogos. Fique de olho nos canais oficiais da FURIA para a agenda!";
+        }
+
+
+        function getFanChant() {
+            const chants = ["VAMOS FURIA! 🐯", "É O FURIAAAA! 🔥", "FURIA É BRASIL! 🇧🇷", "CASCA GROSSA!", "AQUI É FURIA!"];
+            const randomIndex = Math.floor(Math.random() * chants.length);
+            return chants[randomIndex];
+        }
+
+        // This function already exists and provides the social media links
+        function getSocialMediaLinks() {
+            return "Siga a FURIA nas redes sociais:<br>" +
+                   `<a href="https://twitter.com/FURIA" target="_blank">Twitter</a><br>` +
+                   `<a href="https://www.instagram.com/furiagg" target="_blank">Instagram</a><br>` +
+                   `<a href="https://www.twitch.tv/furiatv" target="_blank">Twitch</a><br>` +
+                   `<a href="https://www.youtube.com/@furiagg" target="_blank">YouTube</a><br>` +
+                   `<a href="https://furia.gg" target="_blank">Website</a>`;
+        }
+
+        userInput.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Add click listener to the glossary list
+        glossaryList.addEventListener('click', function(event) {
+            const listItem = event.target.closest('#glossary-list li');
+
+            // Only process if a list item (that isn't a category heading) was clicked
+            if (listItem && !listItem.classList.contains('category-heading')) {
+                const commandElement = listItem.querySelector('strong');
+
+                if (commandElement) {
+                    const commandText = commandElement.textContent.trim();
+                    userInput.value = commandText;
+                    sendMessage();
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
