@@ -245,7 +245,10 @@
                 <li class="category-heading">Interação</li>
                 <li><strong>Apoiar</strong></li>
                 <li><strong>Força</strong></li>
-                <li><strong>Redes sociais</strong></li> </ul>
+                <li><strong>Redes sociais</strong></li>
+                <li><strong>Olá</strong></li>
+
+            </ul>
         </div>
     </div>
 
@@ -278,6 +281,21 @@
         ];
         const TOURNAMENT_RECENT_RESULTS = "PGL Bucharest 2025 (12-14th place)"; // Tournament info
 
+        // Added FURIA News Data
+        const FURIA_NEWS = [
+            "FalleN mostra chegada de malbsMd no bootcamp em vlog.",
+            "FURIA apresenta novo auxiliar técnico, ex-Falcons.",
+            "FURIA se prepara para a PGL Astana 2025 (a partir de 09/05). Próximos campeonatos: IEM Dallas e BLAST.tv Austin Major.",
+            "Análises apontam aproveitamento da FURIA abaixo de 40% em 2025 após resultados recentes.",
+            "Mudanças no elenco: chelo e skullz no banco, malbsMd e yekindar adicionados à line-up."
+        ];
+
+        // Added Upcoming Matches Data
+        const UPCOMING_MATCHES = [
+             { date: "10/05/2025", time: "01:00 BRT", opponent: "The MongolZ", tournament: "PGL Astana 2025", format: "MD3" }
+            // Adicionar mais partidas aqui conforme forem confirmadas
+        ];
+
 
         function appendMessage(message, isUser) {
             const messageDiv = document.createElement('div');
@@ -301,11 +319,11 @@
             let response = getRandomResponse("desconhecido");
 
             if (lowerMessage.includes('notícias') || lowerMessage.includes('noticias')) {
-                response = getRandomResponse("noticias");
+                response = getFuriaNews(); // Call the news function
             } else if (lowerMessage.includes('próximo jogo') || lowerMessage.includes('proximo jogo') || lowerMessage.includes('próximas partidas') || lowerMessage.includes('proximas partidas') || lowerMessage.includes('agenda')) {
-                response = getUpcomingMatches();
+                response = getUpcomingMatches(); // Call the upcoming matches function
             } else if (lowerMessage.includes('resultados recentes') || lowerMessage.includes('resultados') || lowerMessage.includes('ultimos jogos') || lowerMessage.includes('últimos jogos')) {
-                 response = getRecentResults(); // Call the updated function
+                 response = getRecentResults();
             } else if (lowerMessage.includes('jogadores') || lowerMessage.includes('time')) {
                 response = getPlayersInfo();
             } else if (lowerMessage.startsWith('quem é') || lowerMessage.startsWith('sobre')) {
@@ -320,7 +338,7 @@
             } else if (lowerMessage.includes('apoiar') || lowerMessage.includes('força') || lowerMessage.includes('forca') || lowerMessage.includes('grito')) {
                 response = getFanChant();
             } else if (lowerMessage.includes('redes sociais') || lowerMessage.includes('redes social') || lowerMessage.includes('social')) {
-                response = getSocialMediaLinks(); // Call the social media function
+                response = getSocialMediaLinks();
              } else if (lowerMessage === 'olá' || lowerMessage === 'ola' || lowerMessage === 'oi' || lowerMessage === 'boa') {
                 response = getRandomResponse("saudacao");
             } else if (lowerMessage.includes('obrigado') || lowerMessage.includes('valeu') || lowerMessage.includes('grato')) {
@@ -436,6 +454,24 @@
             return resultsText;
         }
 
+        // New function to get FURIA news
+        function getFuriaNews() {
+            if (FURIA_NEWS.length === 0) {
+                return "Ainda não há notícias recentes disponíveis.";
+            }
+
+            let newsText = "<strong>Últimas Notícias da FURIA:</strong><br><br>";
+
+            FURIA_NEWS.forEach((newsItem, index) => {
+                // Use index + 1 for a numbered list
+                newsText += `${index + 1}. ${newsItem}<br>`;
+            });
+
+            newsText += "<br>Para mais detalhes, confira o site oficial da FURIA ou portais de esports.";
+
+            return newsText;
+        }
+
 
         function getRandomResponse(type) {
             const responses = {
@@ -445,8 +481,8 @@
                     "Poderia reformular? Estou aqui para falar da FURIA! Use os comandos rápidos como guia."
                 ],
                 "noticias": [
-                    "Ainda não implementamos a busca por notícias aqui. Para as últimas novidades, confira o site oficial da FURIA ou as redes sociais!",
-                    "Notícias em breve! Acesse o portal de notícias de esports para saber tudo sobre a FURIA."
+                     "Ainda não implementamos a busca por notícias aqui. Para as últimas novidades, confira o site oficial da FURIA ou as redes sociais!",
+                     "Notícias em breve! Acesse o portal de notícias de esports para saber tudo sobre a FURIA."
                 ],
                  "saudacao": [
                     "Salve, torcedor! Pronto para mais FURIA?",
@@ -458,8 +494,25 @@
             return responses[type][randomIndex];
         }
 
+        // Updated getUpcomingMatches function
         function getUpcomingMatches() {
-            return "Ainda não implementamos a lista de próximos jogos. Fique de olho nos canais oficiais da FURIA para a agenda!";
+             if (UPCOMING_MATCHES.length === 0) {
+                return "Ainda não há próximos jogos confirmados no momento. Fique de olho nos canais oficiais da FURIA para a agenda!";
+            }
+
+            let upcomingText = "<strong>Próximas Partidas da FURIA:</strong><br><br>";
+
+            UPCOMING_MATCHES.forEach(match => {
+                upcomingText += `📅 ${match.date} | ⏰ ${match.time}<br>`;
+                upcomingText += `🆚 FURIA vs ${match.opponent} (${match.format})<br>`;
+                upcomingText += `🏆 ${match.tournament}<br>`;
+                upcomingText += "---<br>"; // Separator
+            });
+
+            upcomingText += "<br>Acompanhe a transmissão oficial!";
+
+
+            return upcomingText;
         }
 
 
